@@ -1,0 +1,118 @@
+<!-- You have a product list on a webpage.
+Each product is inside a <li> tag with its name and price.
+You need to:
+
+Select all products using querySelectorAll.
+
+Check if the price is more than 5000.
+
+If yes, change the product name color to red and make it bold. -->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlight Expensive Products</title>
+
+    <style>
+        body{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .product-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .product-card{
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+         .product-card:hover {
+            transform: scale(1.05);
+        }
+        .product-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .product-card h3 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .product-card p {
+            color: green;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .product-card button {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .product-card button:hover {
+            background: #e64a19;
+        }
+    </style>
+</head>
+<body>
+    <h1>Our Products</h1>
+
+    <div class="product-container" id="productContainer">
+
+    </div>
+
+
+    <script>
+        const product=[ // product object array..
+        { name: "Smartphone", price: "₹25,000", image: "./images/phone.png" },
+        { name: "Laptop", price: "₹55,000", image: "./images/asssus.jpg" },
+        { name: "Headphones", price: "₹2,500", image: "./images/con.jpg" }
+        ]
+
+        const container=document.getElementById("productContainer") // get the div 
+
+        // travvers the array of product
+        product.forEach(p=>{
+            // create card
+            const card=document.createElement("div")
+            card.className="product-card"
+             // image
+             const img=document.createElement("img")
+             img.src=p.image;
+
+             // title
+             const title=document.createElement("h2")
+             title.innerText=p.name;
+
+             //price
+             const price=document.createElement("p")
+             price.innerText=p.price;
+
+             // button
+             const btn=document.createElement("button")
+             btn.innerText="Buy Now"
+             btn.addEventListener("click",function(){
+                alert(`You clicked Buy Now for ${product.name}`);
+             });
+
+             //apened element to card
+             card.appendChild(img)
+             card.appendChild(title)
+             card.appendChild(price)
+             card.appendChild(btn)
+             container.appendChild(card) // append card to main container
+        })
+
+
+    </script>
+</body>
+</html>

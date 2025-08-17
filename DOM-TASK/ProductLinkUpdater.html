@@ -1,0 +1,110 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h2>Wellcome to shoping app</h2>
+
+<div>
+    <div>
+        <h1>product1</h1>
+        <img src="product1.jpeg" alt="product1" width="200px" height="200px">
+        <a href="#">Buy Naw</a>
+    </div>
+
+    <div>
+        <h1>product2</h1>
+        <img src="product2.jpeg" alt="product2" width="200px" height="200px">
+        <a href="#">Buy Naw</a>
+    </div>
+
+    <div>
+        <h1>product1</h1>
+        <img src="product3.jpeg" alt="product3" width="200px" height="200px">
+        <a href="#">Buy Naw</a>
+    </div>
+</div>
+
+<script>
+   function chengeProductName() {
+    let productNames=["Laptop","Mobile","Condom"];
+    let headings=document.getElementsByTagName("h1");
+    for(let i=0;i<headings.length;i++) {
+        headings[i].innerText=productNames[i];
+    }
+   }
+function chengeImages() {
+    let images=document.querySelectorAll("img")
+    images[0].setAttribute("src","./images/asssus.jpg")
+    images[0].setAttribute("alt","Laptop")
+    images[1].setAttribute("src","./images/phone.png")
+    images[1].setAttribute("alt","Phone")
+    images[2].setAttribute("src","./images/con.jpg")
+    images[2].setAttribute("alt","Condom")
+
+}
+
+function chengeURL() {
+    let urls=[
+        "https://www.flipkart.com/asus-rog-strix-g15-amd-ryzen-7-octa-core-r7-4800h-16-gb-1-tb-ssd-windows-11-home-4-gb-graphics-nvidia-geforce-rtx-3050ti-144-hz-g513ie-hn040ws-gaming-laptop/p/itm6c78207201c3f?pid=COMGE73KYN76YZC7&lid=LSTCOMGE73KYN76YZC7IAJEHK&marketplace=FLIPKART&q=gaming+laptop+asus+rog&store=4rr%2Ftz1&spotlightTagId=default_TrendingId_4rr%2Ftz1&srno=s_1_1&otracker=AS_Query_OrganicAutoSuggest_6_16_na_na_na&otracker1=AS_Query_OrganicAutoSuggest_6_16_na_na_na&fm=search-autosuggest&iid=ebaa04e0-ba41-4c58-91f4-0ac84fb6f48b.COMGE73KYN76YZC7.SEARCH&ppt=sp&ppn=sp&ssid=8uen0tzeg00000001755261625946&qH=df04dee0332766d9",
+        "https://www.flipkart.com/motorola-edge-60-fusion-5g-pantone-amazonite-256-gb/p/itm9218b12ff853f?pid=MOBH9ARFPVNU7QNU&lid=LSTMOBH9ARFPVNU7QNU36Q1QX&marketplace=FLIPKART&store=tyy%2F4io&spotlightTagId=default_BestsellerId_tyy%2F4io&srno=b_1_1&otracker=browse&fm=organic&iid=d9e2b743-40c1-4135-8de0-fcad43a99a21.MOBH9ARFPVNU7QNU.SEARCH&ppt=browse&ppn=browse&ssid=blfygsyq4g0000001755261586975",
+        "https://www.flipkart.com/durex-extra-ribbed-condom/p/itm23776b0335f3c?pid=CDMF4CZEC6W8VJYQ&lid=LSTCDMF4CZEC6W8VJYQVNSTTD&marketplace=FLIPKART&q=condom+men&store=hlc%2Fp5s%2Fh5u&srno=s_1_1&otracker=AS_QueryStore_OrganicAutoSuggest_1_3_na_na_na&otracker1=AS_QueryStore_OrganicAutoSuggest_1_3_na_na_na&fm=search-autosuggest&iid=en_th6m9YXpFxBzoSVBSSkcY36XN5i9Rjh8c2EN62aOvAv4T6E7SomADBI1QeLc4oHFEH3mseB1q_xSRTx1rjN8qQ%3D%3D&ppt=sp&ppn=sp&ssid=8bql2t5l4w0000001755261645296&qH=f4350e412ac52251"
+    ]
+let allDummyUrl=document.querySelectorAll("a");
+for(let i=0;i<urls.length;i++) {
+    allDummyUrl[i].setAttribute("href",urls[i])
+    allDummyUrl[i].setAttribute("target","_blank")
+    allDummyUrl[i].innerText = `Buy Now - Product ${i + 1}`;
+}
+
+}
+
+   chengeProductName();
+   chengeImages();
+   chengeURL();
+</script>
+
+</body>
+</html>
+
+
+<!-- 
+Scenario: Product Links Updater
+
+Story:
+You are making a shopping website. Initially, all product links go to a placeholder URL (#). Your task is to:
+
+Select all product links using querySelectorAll.
+
+Change their href to a real link:
+
+For first product → "https://example.com/product1"
+
+For second product → "https://example.com/product2"
+
+For third product → "https://example.com/product3"
+
+Make all links open in a new tab (target="_blank").
+
+Update the link text to: "Buy Now - Product X" (where X is the product number).
+
+HTML
+<ul>
+    <li><a href="#">Product 1</a></li>
+    <li><a href="#">Product 2</a></li>
+    <li><a href="#">Product 3</a></li>
+</ul>
+
+Expected Output
+
+When you run your script:
+
+Product 1 → Buy Now - Product 1 → link goes to "https://example.com/product1"
+
+Product 2 → Buy Now - Product 2 → link goes to "https://example.com/product2"
+
+Product 3 → Buy Now - Product 3 → link goes to "https://example.com/product3"
+
+All open in new tabs.  -->

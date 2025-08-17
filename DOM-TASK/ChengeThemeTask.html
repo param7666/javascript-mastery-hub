@@ -1,0 +1,65 @@
+<!-- Scenario: Theme Switcher
+Story:
+You’re building a shopping site where users can switch between Light Mode and Dark Mode.
+When the user clicks a button:
+Change the background color of the page.
+Change the text color of all <h1> and <h2> headings.
+Update the button text to show the opposite mode (if in Dark Mode, show “Switch to Light Mode”).
+Optionally: Change all product link colors to match the theme.
+Requirements
+Use querySelector() and querySelectorAll() to select elements.
+Use .style to change colors.
+Use .addEventListener() to handle the button click.
+Make it toggle between Light and Dark mode on each click.
+💡 Example Flow:
+Page starts in Light Mode → white background, black text.
+Click button → switches to Dark Mode → black background, white text.
+Click again → switches back to Light Mode. -->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Switcher</title>
+</head>
+<body style="background-color: white; color: black; font-family: 'Times New Roman', Times, serif;">
+    <h2> Wellcome to My Theme Switcher webpage </h2>
+
+    <div>
+        <h1>Product 1</h1>
+        <a href="#"> Buy Now</a>
+    </div>
+
+    <div>
+        <h1>Product 2</h1>
+        <a href="#"> Buy Now</a>
+    </div>
+
+    <button id="themebtn" style="margin-top: 20px; padding: 10px;">Chenge Theme</button>
+
+    <script>
+        let btnTheme=document.querySelector("#themebtn")
+        let isDark=false;
+        btnTheme.addEventListener("click",function(){
+            let body=document.querySelector("body")
+            let headings=document.querySelectorAll("h1","h2")
+            let links=document.querySelectorAll("a")
+            if(!isDark) {
+                body.style.backgroundColor="black";
+                body.style.color="white";
+                headings.forEach(h=>h.style.color="lightblue")
+                links.forEach(l=>l.style.color="Yellow")
+                btnTheme.innerText="Chenge to Light Mode"
+                isDark=true;
+            } else {
+                body.style.backgroundColor="white";
+                body.style.color="black";
+                headings.forEach(h=>h.style.color="black")
+                links.forEach(l=>l.style.color="blue")
+                btnTheme.innerText="Chenge to dark Mode"
+                isDark=false;
+            }
+        });
+    </script>
+</body>
+</html>
