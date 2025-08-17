@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color changer</title>
+   <Link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <button class="button" id="button"> Click me</button>
+    </div>
+   <script>
+    const button = document.querySelector(".button");
+    const container = document.querySelector(".container");
+
+// Add a click event listener to the button
+    button.addEventListener("click", () => {
+    // Generate a random color
+        const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    
+    // Apply the random color to the container's background
+    container.style.backgroundColor = randomColor;
+    });
+   </script>
+</body>
+</html>
