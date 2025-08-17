@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <p>You have 3 <p> tags with the class "description". Increase their font size to 48px.</p>
+
+    <div>
+        <p class="description">Hey How Are You.......</p>
+        <p class="description">I am Good What About You</p>
+        <p class="description">I am Also Good </p>
+    </div>
+
+    <script>
+        let description=document.getElementsByClassName("description")
+        for(let i=0;i<description.length;i++) {
+            console.log(description[i])
+            description[i].style.fontSize="48";
+            if(i==1) {
+                description[1].innerHTML="Chenged....."
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    p {
+        font-size: large;
+    }
+</style>
+<body>
+    <div>
+    <p class="para">Hii this is demo on Get Element By Class DOM</p>
+    <p class="para">Wellcome to this Project</p>
+    <p class="para">Example code is given to you</p>
+    </div>
+    <script>
+        let para=document.getElementsByClassName("para")
+        console.log(para) // all three p tags
+        console.log(para[0]) // first p
+        console.log(para[1]) // second para
+        console.log(para[2]) // thard para
+        para[0].innerHTML="<h1>Wellcome</h>"
+        para[1].style.color="green"
+
+            for(let i=0;i<para.length;i++) {
+                console.log(para[i])
+            }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>There are 5 li items with the class "menu-item". Change all their background colors to lightblue.</p>
+    <div>
+        <li class="menu-item">First List</li>
+        <li class="menu-item">Second List</li>
+        <li class="menu-item">Thard List</li>
+        <li class="menu-item">Fourth List</li>
+        <li class="menu-item">Fifth List</li>
+    </div>
+
+    <div>
+        <p>example</p>
+        <pre>
+&lt;script&gt;
+    let list = document.getElementsByClassName("menu-item")
+    for (let i = 0; i &lt; list.length; i++) {
+        list[i].style.background = "skyblue";
+    }
+&lt;/script&gt;
+</pre>
+    </div>
+    <script>
+        let list=document.getElementsByClassName("menu-item")
+        for(let i=0;i<list.length;i++) {
+            list[i].style.background="skyblue";
+        }
+    </script>
+</body>
+</html>

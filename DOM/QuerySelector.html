@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>querySelector & Attributes Example</title>
+</head>
+<body>
+      <h1 id="title">My Web Page</h1>
+
+    <img src="./images/r1.jpeg" alt="Reshmika" width="200">
+
+    <a href="https://google.com" target="_blank">Go to Google</a>
+
+    <script>
+        let image = document.querySelector("img"); // query selector for select the img
+        image.setAttribute("src","./images/a1.jpg"); // set selector to chenge images
+        image.setAttribute("alt","a1")
+
+        let google=document.querySelector("a"); // query selector for select href
+        google.setAttribute("href","https://openai.com") // chenge the href
+        google.setAttribute("target","_blank"); // chenge the target
+        let a=document.getElementsByTagName("a") // select the tag and return array
+        a[0].innerText="Open ChatGPT"; // chenge the text of a[0]
+        a[0].removeAttribute("target")
+
+        
+
+
+    </script>
+</body>
+</html>

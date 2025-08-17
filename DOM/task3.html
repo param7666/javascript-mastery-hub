@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+        <p>You have 4 div elements with the class "box". Change the text color of the first and last box only.</p>
+    </div>
+    <div class="box">
+        <p>div 2</p>
+    </div>
+    <div class="box">
+        <p>div3</p>
+    </div>
+    <div class="box">
+        <p>div4</p>
+    </div>
+
+    <script>
+        let box=document.getElementsByClassName("box");
+        box[0].style.color="green";
+        box[box.length-1].style.color="green";
+    </script>
+</body>
+</html>

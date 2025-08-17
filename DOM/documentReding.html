@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Access</title>
+</head>
+<body>
+    <h1 id="myHeading">Hello World</h1>
+    <h1 id="heading2">Hey How Are You</h1>
+    <h1 id="heading3">get the element and store it and print</h1>
+    <h1 id="mainHeading"> THis is main Heading </h1>
+
+    <script>
+        console.log(document) // whole html document
+        console.log(document.title) // title of document => DOM Access
+        console.log(document.getElementById("myHeading")); // <h1 id="myHeading">Hello World</h1>
+        console.log(document.getElementById("heading2")) // <h1> Hey how are you </h1>
+        const heading3 =document.getElementById("heading3")
+        console.log(heading3) //     <h1 id="heading3">get the element and store it and print</h1>
+ /*
+innerText
+Gets or sets the visible text inside an element.
+Ignores hidden text from CSS (display:none).
+*/
+
+        let mainHeading=document.getElementById("mainHeading");
+        console.log("Before innerText :: ",mainHeading)
+        mainHeading.innerText="Main Heading Chenged using InnerText";
+        console.log("After InnerText :: ",mainHeading)
+
+    </script>
+</body>
+</html>

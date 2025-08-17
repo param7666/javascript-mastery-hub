@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="myHeading"> Inner Html Practice..</h2>
+    <div>
+        <p id="para">THis is Paragraph</p>
+    </div>
+   <script>
+    let myHeading=document.getElementById("myHeading")
+    myHeading.innerHTML="<b> Inner HTML Practice</b>"
+    console.log(myHeading)
+    let para=document.getElementById("para")
+    para.innerHTML="<h4>No THis is Not paragraph</h4>";
+    console.log(para)
+   </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3 id="heading3"> Hii This is Heading</h3>
+    <p>textContent
+Gets or sets all text, even if it’s hidden.
+
+Faster than innerText.</p>
+
+<p id="example">
+    Example
+    <pre>
+&lt;script&gt;
+    let heading=document.getElementById("heading3")
+    heading.textContent="No THis is not Heading........"
+&lt;/script&gt;
+</pre>
+
+</p>
+    <script>
+        let heading=document.getElementById("heading3")
+        heading.textContent="No THis is not Heading........"
+        heading.style.color="green";
+        let example=document.getElementById("example")
+        example.style.color="red";
+    </script>
+</body>
+</html>
