@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Press Logger</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .intro:hover {
+            transform: translateY(-5px);
+        }
+
+        .intro h1 {
+            color: #2d3436;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+        }
+
+        .intro p {
+            color: #636e72;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .main {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(15px);
+        }
+
+        #input {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.2rem;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            color: #2d3436;
+            font-family: inherit;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        #input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+            background: #fff;
+            transform: translateY(-2px);
+        }
+
+        #input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        #output {
+            margin-top: 25px;
+            padding: 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3436;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            border-radius: 12px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(116, 185, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        #output.active {
+            transform: scale(1.05);
+            box-shadow: 0 12px 24px rgba(116, 185, 255, 0.4);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+                gap: 20px;
+            }
+            
+            .intro h1 {
+                font-size: 2rem;
+            }
+            
+            .intro p {
+                font-size: 1rem;
+            }
+            
+            .main {
+                padding: 25px;
+            }
+            
+            #input {
+                font-size: 1.1rem;
+                padding: 15px 20px;
+            }
+            
+            #output {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animation for key press feedback */
+        @keyframes keyPress {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .key-pressed {
+            animation: keyPress 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <h1>🎯 Key Press Logger</h1>
+        <p>Start typing in the input field below and watch as each key press is displayed in real-time!</p>
+    </div>
+
+    <div class="main">
+        <input type="text" id="input" placeholder="Start typing here...">
+        <p id="output">Press any key to begin</p>
+    </div>
+
+    <script>
+        let input = document.getElementById("input");
+        let output = document.getElementById("output");
+
+        input.addEventListener("keydown", function(event) {
+            output.innerText = "You pressed: " + event.key;
+            
+            // Add visual feedback
+            output.classList.add("active");
+            input.classList.add("key-pressed");
+            
+            // Remove the active class after animation
+            setTimeout(() => {
+                output.classList.remove("active");
+                input.classList.remove("key-pressed");
+            }, 200);
+        });
+
+        // Add focus event for better UX
+        input.addEventListener("focus", function() {
+            if (output.innerText === "Press any key to begin") {
+                output.innerText = "Ready to capture your keystrokes!";
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- Key Press Logger
+
+👉 Create an input box.
+👉 Whenever you press a key, show the pressed key below the box.
+
+Example:
+
+If you press A, it should display: You pressed: A -->

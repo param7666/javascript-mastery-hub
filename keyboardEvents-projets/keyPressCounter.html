@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Counter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        #input {
+            width: 100%;
+            padding: 20px 25px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        #input:focus {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        #input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .counter-display {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        #output {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .count-number {
+            font-size: 2rem;
+            color: #FFD700;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            flex: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(238, 90, 36, 0.4);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(238, 90, 36, 0.6);
+        }
+
+        .typing-animation {
+            animation: pulse 0.2s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .floating-keys {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+            animation: float-up 1s ease-out forwards;
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px) scale(1.2);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⌨️ Type Counter</h1>
+        <p class="subtitle">Watch your keystrokes come to life</p>
+        
+        <div class="input-wrapper">
+            <input type="text" id="input" placeholder="Start typing to see the magic happen...">
+        </div>
+        
+        <div class="counter-display">
+            <p id="output">Keys typed: <span class="count-number">0</span></p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Characters</div>
+                <div class="stat-value" id="charCount">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Words</div>
+                <div class="stat-value" id="wordCount">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Speed (CPM)</div>
+                <div class="stat-value" id="speed">0</div>
+            </div>
+        </div>
+        
+        <button class="reset-btn" onclick="resetCounter()">🔄 Reset</button>
+    </div>
+
+    <script>
+        let input = document.getElementById("input");
+        let output = document.getElementById("output");
+        let charCountEl = document.getElementById("charCount");
+        let wordCountEl = document.getElementById("wordCount");
+        let speedEl = document.getElementById("speed");
+        
+        let count = 0;
+        let startTime = null;
+        
+        function createFloatingKey(key, x, y) {
+            const floatingKey = document.createElement('div');
+            floatingKey.textContent = key;
+            floatingKey.className = 'floating-keys';
+            floatingKey.style.left = x + 'px';
+            floatingKey.style.top = y + 'px';
+            document.body.appendChild(floatingKey);
+            
+            setTimeout(() => {
+                document.body.removeChild(floatingKey);
+            }, 1000);
+        }
+        
+        function updateStats() {
+            const text = input.value;
+            const charCount = text.length;
+            const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            
+            charCountEl.textContent = charCount;
+            wordCountEl.textContent = wordCount;
+            
+            if (startTime && count > 0) {
+                const timeElapsed = (Date.now() - startTime) / 1000 / 60; // in minutes
+                const cpm = Math.round(count / timeElapsed);
+                speedEl.textContent = cpm;
+            }
+        }
+        
+        input.addEventListener("keypress", function(event) {
+            // Don't count if it's a backspace or other control keys
+            if (event.key.length === 1) {
+                if (startTime === null) {
+                    startTime = Date.now();
+                }
+                
+                count++;
+                output.innerHTML = `Keys typed: <span class="count-number">${count}</span>`;
+                
+                // Add animation
+                document.querySelector('.counter-display').classList.add('typing-animation');
+                setTimeout(() => {
+                    document.querySelector('.counter-display').classList.remove('typing-animation');
+                }, 200);
+                
+                // Create floating key effect
+                const rect = input.getBoundingClientRect();
+                const x = rect.left + Math.random() * rect.width;
+                const y = rect.top;
+                createFloatingKey(event.key, x, y);
+                
+                updateStats();
+            }
+        });
+        
+        input.addEventListener("input", updateStats);
+        
+        function resetCounter() {
+            count = 0;
+            startTime = null;
+            input.value = '';
+            output.innerHTML = `Keys typed: <span class="count-number">0</span>`;
+            charCountEl.textContent = '0';
+            wordCountEl.textContent = '0';
+            speedEl.textContent = '0';
+            input.focus();
+        }
+        
+        // Focus input on page load
+        window.addEventListener('load', () => {
+            input.focus();
+        });
+    </script>
+</body>
+</html>

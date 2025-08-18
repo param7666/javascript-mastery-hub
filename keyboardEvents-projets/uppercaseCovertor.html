@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uppercase Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        #input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        #input:focus {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+        }
+
+        #input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .output-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        #output {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            word-break: break-word;
+            line-height: 1.4;
+            letter-spacing: 1px;
+        }
+
+        #output:empty::before {
+            content: "Your uppercase text will appear here...";
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .output-container.has-text {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            animation: glow 0.5s ease;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            #input {
+                font-size: 1rem;
+                padding: 12px 15px;
+            }
+            
+            #output {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Add a subtle animation to the background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="white" stop-opacity="0.1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient></defs><circle cx="25" cy="25" r="20" fill="url(%23g)"><animateTransform attributeName="transform" type="translate" values="0 0; 100 0; 0 100; 0 0" dur="20s" repeatCount="indefinite"/></circle><circle cx="75" cy="75" r="15" fill="url(%23g)"><animateTransform attributeName="transform" type="translate" values="0 0; -50 0; 0 -50; 0 0" dur="15s" repeatCount="indefinite"/></circle></svg>') repeat;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Transformer</h1>
+        <p class="subtitle">Convert your text to uppercase instantly</p>
+        <input type="text" id="input" placeholder="Type your message here...">
+        <div class="output-container" id="outputContainer">
+            <p id="output"></p>
+        </div>
+    </div>
+
+    <script>
+        let input = document.getElementById("input");
+        let output = document.getElementById("output");
+        let outputContainer = document.getElementById("outputContainer");
+
+        input.addEventListener("keyup", function(event) {
+            const upperText = this.value.toUpperCase();
+            output.innerText = upperText;
+            
+            // Add visual feedback when text is present
+            if (upperText.trim() !== "") {
+                outputContainer.classList.add("has-text");
+            } else {
+                outputContainer.classList.remove("has-text");
+            }
+        });
+
+        // Add some interactivity on focus
+        input.addEventListener("focus", function() {
+            this.parentElement.style.transform = "translateY(-8px)";
+        });
+
+        input.addEventListener("blur", function() {
+            this.parentElement.style.transform = "translateY(0)";
+        });
+    </script>
+</body>
+</html>
