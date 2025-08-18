@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Only numbers are allowed to Enter</h1>
+
+    <div>
+        <input type="text" name="" id="numBox" placeholder="enter something...........">
+    </div>
+
+    <script>
+        let numBox=document.getElementById("numBox")
+        numBox.addEventListener("keydown", function(event) {
+            if(!(event.key >= "0" && event.key<="9") &&
+            event.key !== "Backspace" && 
+         event.key !== "Delete" &&
+         event.key !== "ArrowLeft" && 
+         event.key !== "ArrowRight") {
+            event.preventDefault(); // stop defualt key presss
+            alert("Only numbers are allowed you presed "+ event.key)
+         }
+        });
+    </script>
+</body>
+</html>

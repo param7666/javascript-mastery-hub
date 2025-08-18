@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>Detect up key demo</h2>
+    </div>
+
+    <div>
+        <input type="text" name="" id="input" placeholder="type something...........">
+        <p></p>
+        <p id="output"></p>
+    </div>
+
+    <script>
+        let input=document.getElementById("input")
+        let output=document.getElementById("output")
+        input.addEventListener("keyup", function(event){
+            output.innerText="Key Relesed   "+event.key
+        })
+    </script>
+</body>
+</html>

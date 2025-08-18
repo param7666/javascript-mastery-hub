@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>keyboard event demo</h2>
+    </div>
+    <div>
+        <input type="text" id="input" placeholder="type something............">
+        <p id="output"></p>
+    </div>
+    <script>
+        let input=document.getElementById("input")
+        let output=document.getElementById("output")
+
+        input.addEventListener("keydown", function(event){
+            output.innerText="key down "+event.key;
+        });
+
+    </script>
+</body>
+</html>

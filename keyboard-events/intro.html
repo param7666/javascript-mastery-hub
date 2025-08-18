@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyboard Events Introduction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #74ebd5, #9face6);
+      color: #222;
+      padding: 40px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .info-box {
+      background: white;
+      padding: 20px;
+      margin: 20px auto;
+      width: 60%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin: 15px;
+      border: 2px solid #333;
+      border-radius: 8px;
+      width: 250px;
+      text-align: center;
+    }
+    .output {
+      font-size: 20px;
+      margin-top: 15px;
+      color: #e74c3c;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎹 Keyboard Events in JavaScript</h1>
+  <div class="info-box">
+    <h3>Types of Keyboard Events</h3>
+    <ul style="text-align:left; font-size: 18px;">
+      <li><b>keydown</b> – Fires when a key is pressed</li>
+      <li><b>keyup</b> – Fires when a key is released</li>
+      <li><b>keypress</b> – (Deprecated) Only for character keys</li>
+    </ul>
+  </div>
+
+  <h2>Try Typing Below 👇</h2>
+  <input type="text" id="myInput" placeholder="Type something here...">
+  <p class="output" id="output">Press a key to see the event!</p>
+
+  <script>
+    let input = document.getElementById("myInput");
+    let output = document.getElementById("output");
+
+    input.addEventListener("keydown", function(event) {
+      output.innerHTML = "🔽 Key Down: " + event.key;
+    });
+
+    input.addEventListener("keyup", function(event) {
+      output.innerHTML = "🔼 Key Up: " + event.key;
+    });
+  </script>
+</body>
+</html>
