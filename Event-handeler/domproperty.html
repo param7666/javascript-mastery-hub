@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>DOM Property Events</h1>
+
+    <div>
+        <h2>Intro</h2>
+        <li>In JavaScript, every DOM element (like button, div, etc.) has event properties such as onclick, onmouseover, onmouseout, etc.</li>
+
+       <li> You can assign a function to these properties to handle events.</li>
+    </div>
+
+    <div>
+        <p>Click on this button to verify..</p>
+        <button id="btn">Click me</button>
+    </div>
+
+
+    <div>
+        <h2>ondblclick</h2>
+        <p id="para1" style="background-color: aqua; color: red;">double click to activate evenet</p>
+    </div>
+
+    <div>
+        <h2>onmouseover</h2>
+        <div style="background-color: aqua; color: black; height: 80px; width: 200px; text-align: center;" id="mover">
+            hower me
+        </div>
+    </div>
+
+    <div>
+        <h2>onmouseout</h2>
+        <div style="background-color: aquamarine; color: chartreuse; text-align: center; height: 150px; width: 150px;">
+                    <p id="para2">when you remove mouse from here text will be chenged</p>
+        </div>
+    </div>
+
+    
+
+
+    <script>
+        let btn=document.getElementById("btn")
+        btn.onclick=function(){
+            alert("Verified.......");
+        }
+
+        let para1=document.getElementById("para1")
+        para1.ondblclick = function(){
+            this.style.backgroundColor="pink";
+            
+        }
+
+        let mover=document.getElementById("mover")
+        mover.onmouseover= function(){
+            this.style.backgroundColor="Pink";
+        }
+
+        let para2=document.getElementById("para2").onmouseout= function() {
+            this.innerText="Text Changed....";
+            this.style.color="red";
+        }
+
+
+
+    </script>
+</body>
+</html>

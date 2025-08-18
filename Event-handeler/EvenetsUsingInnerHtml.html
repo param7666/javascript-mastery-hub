@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Events Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        div.event-box {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 6px solid #4CAF50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 6px;
+        }
+        h3 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        button {
+            padding: 8px 12px;
+            margin-top: 8px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .box {
+            width: 200px; 
+            height: 80px;  
+            background: lightblue; 
+            text-align: center;
+            line-height: 80px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Demo on Events Using Inline HTML Attribute</h1>
+
+    <div class="event-box">
+        <h3>1) onclick</h3>
+        <p>When it fires: When the user clicks (press + release) the left mouse button on an element.</p>
+        <button onclick="this.innerHTML='Clicked'">Click Me</button>
+        <button onclick="alert('Button Clicked!')">Click for Alert</button>
+    </div>
+
+    <div class="event-box">
+        <h3>2) ondblclick</h3>
+        <p>When it fires: When the user quickly clicks twice on the same element.</p>
+        <p ondblclick="this.style.color='red'" style="color: blue;">Double Click me to change color</p>
+        <button ondblclick="alert('Double Click Detected!')">Double Click to Verify</button>
+    </div>
+
+    <div class="event-box">
+        <h3>3) onmouseover</h3>
+        <p>When it fires: When the mouse pointer enters the element area.</p>
+        <div class="box" onmouseover="this.style.background='orange'">Hover Me</div>
+    </div>
+
+    <div class="event-box">
+        <h3>4) onmouseout</h3>
+        <p>When it fires: When the mouse pointer leaves the element area.</p>
+        <div class="box" 
+             onmouseover="this.style.background='orange'" 
+             onmouseout="this.style.background='rgb(235, 7, 140)'">Hover Me</div>
+    </div>
+
+    <div class="event-box">
+        <h3>5) onmousedown</h3>
+        <p>When it fires: When the mouse button is pressed down on an element.</p>
+        <button onmousedown="this.innerText='Mouse Down !'">Click Me</button>
+    </div>
+
+    <div class="event-box">
+        <h3>6) onmouseup</h3>
+        <p>When it fires: When the mouse button is released over an element.</p>
+        <button onmouseup="this.innerText='Mouse Released'">Press and Hold</button>
+    </div>
+
+    <div class="event-box">
+        <h3>7) onmousemove</h3>
+        <p>When it fires: When the mouse is moved over the element.</p>
+        <div class="box" onmousemove="this.innerHTML='Mouse Moving!'">Move Mouse Here</div>
+    </div>
+
+    <div class="event-box">
+        <h3>8) oncontextmenu</h3>
+        <p>When it fires: When the user right-clicks on an element.</p>
+        <p oncontextmenu="alert('Right Click Detected!'); return false;" 
+           style="background: lightyellow; padding: 10px; border-radius: 4px;">
+            Right-click on this text
+        </p>
+    </div>
+</body>
+</html>

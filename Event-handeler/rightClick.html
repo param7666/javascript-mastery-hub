@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Custom Right Click Message</h1>
+     <p oncontextmenu="showCustomMessage(event)">
+        Right-click on this text to see a custom message!
+    </p>
+
+    <script>
+        function showCustomMessage(e) {
+            e.preventDefault(); // Stop default context menu
+            alert("Custom Menu - Right Click Detected!");
+        }
+    </script>
+</body>
+</html>
+
+<!-- Custom Right Click Message
+
+Create a paragraph.
+
+When right-clicked, show an alert "Custom Menu - Right Click Detected!" and stop the default menu from opening. -->

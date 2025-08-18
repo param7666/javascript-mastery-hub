@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Demo on event Listeners</h1>
+    <div>
+        <button id="btn"> Click me</button>
+    </div>
+
+
+    <div>
+        <h1>Demo on multiple event Listeners on one element</h1>
+        <div style="background-color: aqua; color: black; height: 200px; width: 200px; text-align: center;" class="mlt">
+            <button class="mlt"> Click me</button>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script>
+       let btn= document.getElementById("btn");
+       btn.addEventListener("click", function(){
+        alert("Button Clicked......")
+       })
+
+
+       let mlt=document.getElementsByClassName("mlt");
+       mlt[1].addEventListener("click", function() {
+        alert("Button Clicked.......")
+        this.innerText="Clicked"
+       })
+
+         mlt[1].addEventListener("mouseout", function() {
+       
+        this.innerText="click here"
+       })
+
+       mlt[0].addEventListener("mouseover", function(){
+        this.style.backgroundColor="pink";
+       })
+        mlt[0].addEventListener("mouseout", function(){
+        this.style.backgroundColor="yellow";
+       })
+    </script>
+</body> 
+</html>

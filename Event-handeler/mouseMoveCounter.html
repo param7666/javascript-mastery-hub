@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Mouse Move Counter</h1>
+
+    <div id="box" onmousemove="updateCounter()">
+            0
+    </div>
+    <script>
+         let count=0;
+        function updateCounter() {
+           count++;
+            document.getElementById("box").innerText=count;
+        }
+
+    </script>
+</body>
+</html>
+
+<!-- Mouse Move Counter
+
+Create a div box.
+
+Every time the mouse moves inside, increase a counter and display it inside the box. -->
