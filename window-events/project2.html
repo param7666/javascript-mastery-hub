@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Desktop - Window Events Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Desktop */
+        .desktop {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            cursor: crosshair;
+        }
+        
+        /* Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            z-index: 1000;
+        }
+        
+        .system-info {
+            color: white;
+            font-size: 12px;
+            margin-right: auto;
+        }
+        
+        .time {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* Status Panel */
+        .status-panel {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            min-width: 200px;
+            font-size: 12px;
+            z-index: 999;
+        }
+        
+        .status-item {
+            margin: 5px 0;
+        }
+        
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 999;
+        }
+        
+        .online { background: #4CAF50; }
+        .offline { background: #f44336; }
+        
+        /* Virtual Windows */
+        .window {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            min-width: 300px;
+            min-height: 200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        
+        .window.focused {
+            z-index: 100;
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .window-header {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 15px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .window-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .window-controls {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .control-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .control-btn:hover { opacity: 0.8; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #28ca42; }
+        .close { background: #ff5f56; }
+        
+        .window-content {
+            padding: 20px;
+            height: calc(100% - 44px);
+            overflow-y: auto;
+        }
+        
+        /* Instructions */
+        .instructions {
+            position: fixed;
+            bottom: 60px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            max-width: 250px;
+            z-index: 999;
+        }
+        
+        .instructions h4 {
+            margin-bottom: 10px;
+            color: #67eea0;
+        }
+        
+        .instructions ul {
+            list-style: none;
+        }
+        
+        .instructions li {
+            margin: 5px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .instructions li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #67eea0;
+        }
+        
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .window {
+                min-width: 250px;
+                min-height: 150px;
+            }
+            
+            .status-panel {
+                right: 10px;
+                min-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop" id="desktop">
+        <!-- Connection Status -->
+        <div class="connection-status online" id="connectionStatus">
+            🟢 Online
+        </div>
+        
+        <!-- Status Panel -->
+        <div class="status-panel">
+            <div class="status-item">📐 <strong>Window Size:</strong> <span id="windowSize">-</span></div>
+            <div class="status-item">📍 <strong>Mouse Position:</strong> <span id="mousePos">-</span></div>
+            <div class="status-item">📜 <strong>Scroll Position:</strong> <span id="scrollPos">0px</span></div>
+            <div class="status-item">🎯 <strong>Window Focus:</strong> <span id="focusStatus">Active</span></div>
+            <div class="status-item">🪟 <strong>Open Windows:</strong> <span id="windowCount">0</span></div>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instructions">
+            <h4>🎮 How to Use:</h4>
+            <ul>
+                <li>Double-click to create window</li>
+                <li>Drag windows to move them</li>
+                <li>Try resizing browser</li>
+                <li>Try going offline</li>
+                <li>Switch browser tabs</li>
+            </ul>
+        </div>
+        
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="system-info">
+                <span id="eventCounter">Events: 0</span> | 
+                <span>FPS: <span id="fps">60</span></span>
+            </div>
+            <div class="time" id="currentTime">00:00:00</div>
+        </div>
+    </div>
+
+    <script>
+        class VirtualDesktop {
+            constructor() {
+                this.windows = [];
+                this.eventCount = 0;
+                this.mousePos = { x: 0, y: 0 };
+                this.draggedWindow = null;
+                this.dragOffset = { x: 0, y: 0 };
+                this.fps = 60;
+                this.lastTime = 0;
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.updateClock();
+                this.updateStatus();
+                this.startFPSCounter();
+                
+                // Create welcome window
+                setTimeout(() => {
+                    this.createWindow('Welcome! 🎉', this.getWelcomeContent(), 200, 150);
+                }, 500);
+            }
+            
+            setupEventListeners() {
+                const desktop = document.getElementById('desktop');
+                
+                // DOMContentLoaded
+                document.addEventListener('DOMContentLoaded', () => {
+                    this.logEvent('DOMContentLoaded');
+                });
+                
+                // Window resize
+                window.addEventListener('resize', () => {
+                    this.logEvent('Window Resize');
+                    this.updateStatus();
+                    this.repositionWindows();
+                });
+                
+                // Window focus/blur
+                window.addEventListener('focus', () => {
+                    this.logEvent('Window Focus');
+                    document.getElementById('focusStatus').textContent = 'Active';
+                });
+                
+                window.addEventListener('blur', () => {
+                    this.logEvent('Window Blur');
+                    document.getElementById('focusStatus').textContent = 'Inactive';
+                });
+                
+                // Online/Offline
+                window.addEventListener('online', () => {
+                    this.logEvent('Back Online');
+                    const status = document.getElementById('connectionStatus');
+                    status.className = 'connection-status online';
+                    status.innerHTML = '🟢 Online';
+                });
+                
+                window.addEventListener('offline', () => {
+                    this.logEvent('Gone Offline');
+                    const status = document.getElementById('connectionStatus');
+                    status.className = 'connection-status offline';
+                    status.innerHTML = '🔴 Offline';
+                });
+                
+                // Mouse tracking
+                desktop.addEventListener('mousemove', (e) => {
+                    this.mousePos = { x: e.clientX, y: e.clientY };
+                    document.getElementById('mousePos').textContent = `${e.clientX}, ${e.clientY}`;
+                    
+                    if (this.draggedWindow) {
+                        this.draggedWindow.style.left = (e.clientX - this.dragOffset.x) + 'px';
+                        this.draggedWindow.style.top = (e.clientY - this.dragOffset.y) + 'px';
+                    }
+                });
+                
+                // Double click to create window
+                desktop.addEventListener('dblclick', (e) => {
+                    if (e.target === desktop) {
+                        this.logEvent('Double Click');
+                        this.createWindow(
+                            `Window ${this.windows.length + 1}`,
+                            this.getRandomContent(),
+                            e.clientX - 150,
+                            e.clientY - 100
+                        );
+                    }
+                });
+                
+                // Window dragging
+                desktop.addEventListener('mousedown', (e) => {
+                    if (e.target.classList.contains('window-header')) {
+                        this.draggedWindow = e.target.parentElement;
+                        const rect = this.draggedWindow.getBoundingClientRect();
+                        this.dragOffset.x = e.clientX - rect.left;
+                        this.dragOffset.y = e.clientY - rect.top;
+                        this.focusWindow(this.draggedWindow);
+                    }
+                });
+                
+                desktop.addEventListener('mouseup', () => {
+                    this.draggedWindow = null;
+                });
+                
+                // Before unload
+                window.addEventListener('beforeunload', (e) => {
+                    if (this.windows.length > 0) {
+                        e.preventDefault();
+                        e.returnValue = '';
+                    }
+                });
+            }
+            
+            createWindow(title, content, x, y) {
+                const windowEl = document.createElement('div');
+                windowEl.className = 'window slide-in';
+                windowEl.style.left = Math.max(0, Math.min(x, window.innerWidth - 300)) + 'px';
+                windowEl.style.top = Math.max(0, Math.min(y, window.innerHeight - 200)) + 'px';
+                windowEl.style.zIndex = 50 + this.windows.length;
+                
+                windowEl.innerHTML = `
+                    <div class="window-header">
+                        <div class="window-title">${title}</div>
+                        <div class="window-controls">
+                            <div class="control-btn minimize" onclick="desktop.minimizeWindow(this)"></div>
+                            <div class="control-btn maximize" onclick="desktop.maximizeWindow(this)"></div>
+                            <div class="control-btn close" onclick="desktop.closeWindow(this)"></div>
+                        </div>
+                    </div>
+                    <div class="window-content">${content}</div>
+                `;
+                
+                document.getElementById('desktop').appendChild(windowEl);
+                this.windows.push(windowEl);
+                this.focusWindow(windowEl);
+                this.updateStatus();
+                
+                // Window click to focus
+                windowEl.addEventListener('click', () => {
+                    this.focusWindow(windowEl);
+                });
+            }
+            
+            focusWindow(windowEl) {
+                this.windows.forEach(w => w.classList.remove('focused'));
+                windowEl.classList.add('focused');
+            }
+            
+            closeWindow(controlBtn) {
+                const windowEl = controlBtn.closest('.window');
+                windowEl.style.transform = 'scale(0)';
+                windowEl.style.opacity = '0';
+                setTimeout(() => {
+                    windowEl.remove();
+                    this.windows = this.windows.filter(w => w !== windowEl);
+                    this.updateStatus();
+                    this.logEvent('Window Closed');
+                }, 200);
+            }
+            
+            minimizeWindow(controlBtn) {
+                const windowEl = controlBtn.closest('.window');
+                windowEl.style.transform = 'scale(0.1)';
+                windowEl.style.opacity = '0.5';
+                setTimeout(() => {
+                    windowEl.style.transform = 'scale(1)';
+                    windowEl.style.opacity = '1';
+                }, 1000);
+                this.logEvent('Window Minimized');
+            }
+            
+            maximizeWindow(controlBtn) {
+                const windowEl = controlBtn.closest('.window');
+                if (windowEl.dataset.maximized === 'true') {
+                    windowEl.style.width = '';
+                    windowEl.style.height = '';
+                    windowEl.style.left = windowEl.dataset.originalLeft;
+                    windowEl.style.top = windowEl.dataset.originalTop;
+                    windowEl.dataset.maximized = 'false';
+                } else {
+                    windowEl.dataset.originalLeft = windowEl.style.left;
+                    windowEl.dataset.originalTop = windowEl.style.top;
+                    windowEl.style.width = '90%';
+                    windowEl.style.height = '80%';
+                    windowEl.style.left = '5%';
+                    windowEl.style.top = '5%';
+                    windowEl.dataset.maximized = 'true';
+                }
+                this.logEvent('Window Maximized');
+            }
+            
+            repositionWindows() {
+                this.windows.forEach(windowEl => {
+                    const rect = windowEl.getBoundingClientRect();
+                    const x = Math.max(0, Math.min(rect.left, window.innerWidth - rect.width));
+                    const y = Math.max(0, Math.min(rect.top, window.innerHeight - rect.height));
+                    windowEl.style.left = x + 'px';
+                    windowEl.style.top = y + 'px';
+                });
+            }
+            
+            logEvent(eventType) {
+                this.eventCount++;
+                document.getElementById('eventCounter').textContent = `Events: ${this.eventCount}`;
+                console.log(`🎯 Event: ${eventType} (Total: ${this.eventCount})`);
+            }
+            
+            updateStatus() {
+                document.getElementById('windowSize').textContent = `${window.innerWidth} × ${window.innerHeight}`;
+                document.getElementById('windowCount').textContent = this.windows.length;
+            }
+            
+            updateClock() {
+                const now = new Date();
+                document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+                setTimeout(() => this.updateClock(), 1000);
+            }
+            
+            startFPSCounter() {
+                const updateFPS = (currentTime) => {
+                    if (this.lastTime) {
+                        const fps = Math.round(1000 / (currentTime - this.lastTime));
+                        document.getElementById('fps').textContent = Math.min(fps, 60);
+                    }
+                    this.lastTime = currentTime;
+                    requestAnimationFrame(updateFPS);
+                };
+                requestAnimationFrame(updateFPS);
+            }
+            
+            getWelcomeContent() {
+                return `
+                    <h3>🎉 Welcome to Virtual Desktop!</h3>
+                    <p>This demo showcases various JavaScript window events:</p>
+                    <ul>
+                        <li><strong>resize</strong> - Try resizing your browser</li>
+                        <li><strong>focus/blur</strong> - Switch browser tabs</li>
+                        <li><strong>online/offline</strong> - Toggle your connection</li>
+                        <li><strong>mousemove</strong> - Mouse tracking</li>
+                        <li><strong>beforeunload</strong> - Try closing the tab</li>
+                    </ul>
+                    <p>Double-click the desktop to create more windows!</p>
+                `;
+            }
+            
+            getRandomContent() {
+                const contents = [
+                    '<h3>📊 System Monitor</h3><p>Monitoring window events in real-time. All events are being tracked and displayed in the status panel.</p>',
+                    '<h3>🎨 Creative App</h3><p>This window demonstrates smooth animations and interactions using CSS transitions and JavaScript.</p>',
+                    '<h3>📝 Text Editor</h3><p>A simple text editor simulation. You can drag this window around and resize your browser to see responsive behavior.</p>',
+                    '<h3>🌐 Web Browser</h3><p>Simulating a web browser window with connection status monitoring and offline detection capabilities.</p>',
+                    '<h3>⚙️ Settings Panel</h3><p>Configuration window showing how multiple window events work together to create a smooth user experience.</p>'
+                ];
+                return contents[Math.floor(Math.random() * contents.length)];
+            }
+        }
+        
+        // Initialize the desktop
+        const desktop = new VirtualDesktop();
+        
+        // Make it globally accessible for button clicks
+        window.desktop = desktop;
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>window onresize events</h1>
+    <p>resize the browser windows to see the chenge below</p>
+    <div id="sizebox">width:-,Height: - </div>
+
+    <script>
+        function shoWindowSize(){
+            document.getElementById("sizebox").innerText="Width "+window.innerWidth+" px, Height: "+window.innerHeight+" px";
+        }
+
+        shoWindowSize();
+        window.onresize=shoWindowSize
+    </script>
+</body>
+</html>

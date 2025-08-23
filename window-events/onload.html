@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin-top: 5px;
+        }
+        h1{
+            color: green;
+            background-color: aqua;
+            border-radius: 10px;
+        }
+        p{
+            background-color: yellow;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        Wellcome to windows event learning
+    </h1>
+    <p>this message will apean when the full page is loaded</p>
+    <p>
+        👉 What it is? <br>
+
+The window.onload event fires when the entire page is fully loaded, including images, CSS, and JavaScript files. <br>
+
+It ensures that all elements are ready before your script runs. <br>
+    </p>
+
+    <script>
+        window.onload=function(){
+            alert("page is fully loaded");
+            console.log("page is ready to use...");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMContentLoaded Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+        .message {
+            background: #e8f5e8;
+            border: 1px solid #4CAF50;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .status {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DOMContentLoaded Demo</h1>
+        
+        <div class="status" id="status">
+            ⏳ Page is loading...
+        </div>
+        
+        <p>This demonstrates the DOMContentLoaded event:</p>
+        
+        <button id="clickMe" class="hidden">Click Me!</button>
+        <button id="changeText" class="hidden">Change Text</button>
+        
+        <div id="output" class="message hidden">
+            <p>🎉 DOM is ready! JavaScript can now safely interact with all elements.</p>
+        </div>
+        
+        <div id="clickCount" class="hidden">
+            <p>Button clicked: <span id="count">0</span> times</p>
+        </div>
+    </div>
+
+    <script>
+        // ❌ This would cause an error if run immediately
+        // because the button doesn't exist yet
+        // const button = document.getElementById('clickMe');
+        
+        console.log('Script is running...');
+        
+        // ✅ Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM is fully loaded and parsed!');
+            
+            // Update status
+            const status = document.getElementById('status');
+            status.textContent = '✅ DOM loaded! JavaScript is now running.';
+            status.style.background = '#d4edda';
+            status.style.borderColor = '#4CAF50';
+            
+            // Now it's safe to find and use HTML elements
+            const clickButton = document.getElementById('clickMe');
+            const changeButton = document.getElementById('changeText');
+            const output = document.getElementById('output');
+            const clickCount = document.getElementById('clickCount');
+            const countSpan = document.getElementById('count');
+            
+            // Show hidden elements
+            clickButton.classList.remove('hidden');
+            changeButton.classList.remove('hidden');
+            output.classList.remove('hidden');
+            clickCount.classList.remove('hidden');
+            
+            // Add event listeners
+            let clicks = 0;
+            
+            clickButton.addEventListener('click', function() {
+                clicks++;
+                countSpan.textContent = clicks;
+                
+                if (clicks === 1) {
+                    clickButton.textContent = 'Click Me Again!';
+                } else if (clicks >= 5) {
+                    clickButton.textContent = 'Wow, you really like clicking!';
+                }
+            });
+            
+            changeButton.addEventListener('click', function() {
+                const messages = [
+                    'JavaScript is awesome! 🚀',
+                    'DOMContentLoaded makes coding safer! 🛡️',
+                    'Always wait for the DOM to load! ⚡',
+                    'This prevents errors and bugs! 🐛',
+                    'Your code runs at the perfect time! ⏰'
+                ];
+                
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                output.innerHTML = `<p>${randomMessage}</p>`;
+            });
+        });
+        
+        // This runs immediately when the script loads
+        console.log('This runs before DOM is ready');
+    </script>
+</body>
+</html>
