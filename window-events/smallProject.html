@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Window Events Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      height: 2000px; /* for scroll testing */
+      transition: background 0.3s;
+    }
+    h1 {
+      text-align: center;
+      color: darkblue;
+    }
+    .box {
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 400px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .label {
+      color: #444;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌐 Window Events Dashboard</h1>
+
+  <div class="box">
+    <div class="label">Window Size:</div>
+    <div id="sizeBox">-</div>
+  </div>
+
+  <div class="box">
+    <div class="label">Scroll Position:</div>
+    <div id="scrollBox">-</div>
+  </div>
+
+  <script>
+    // ✅ Onload event
+    window.onload = function() {
+      alert("✅ Page fully loaded!");
+    };
+
+    // ✅ Onunload event
+    window.onunload = function() {
+      console.log("⚠️ User is leaving the page...");
+    };
+
+    // ✅ Onresize event
+    function updateSize() {
+      document.getElementById("sizeBox").innerText =
+        "Width: " + window.innerWidth + "px , Height: " + window.innerHeight + "px";
+    }
+    updateSize(); // run once at start
+    window.onresize = updateSize;
+
+    // ✅ Onscroll event
+    window.onscroll = function() {
+      document.getElementById("scrollBox").innerText = window.scrollY + "px";
+    };
+
+    // ✅ Onfocus / Onblur events
+    window.onfocus = function() {
+      document.body.style.background = "white";
+    };
+    window.onblur = function() {
+      document.body.style.background = "#ffdddd";
+    };
+  </script>
+</body>
+</html>
