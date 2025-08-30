@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SetTImeOut Example</title>
+</head>
+<style>
+    body{
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+        margin-top: 100px;
+        background: #f4f9;
+    }
+    #message{
+        font-size: 24px;
+        font-weight: bold;
+        color: #e30e2b;
+        padding: 20px;
+        border-radius: 10px;
+        border-color: #e30e2b;
+        display: inline-block;
+        background: #ecf0f1;
+        box-shadow: 0px 4px 8px rgba(0,0, 0, 0.1);
+    }
+</style>
+<body>
+    <h1>⏳ Please wait...</h1>
+     <div id="message">Message will appear in 3 seconds...</div>
+     <script>
+        setTimeout(()=>{
+            document.getElementById("message").innerText="🎉 Welcome Baby! This message appeared after 3 seconds"
+        },3000)
+     </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin-top: 80px;
+            background: #f4f6;
+        }
+        #counter{
+            font-size: 40px;
+            font-weight: bold;
+            color:#27ae60;
+            margin: 20px, 0;
+        }
+         button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 5px;
+      transition: 0.3s;
+    }
+     button:hover {
+      opacity: 0.8;
+    }
+    #startBtn {
+      background: #2980b9;
+      color: white;
+    }
+    #stopBtn {
+      background: #c0392b;
+      color: white;
+    }
+    </style>
+</head>
+<body>
+    <h1>⏱ Counter using setInterval</h1>
+  <div id="counter">0</div>
+
+  <button id="startBtn">Start Counter</button>
+  <button id="stopBtn">Stop Counter</button>
+
+  <script>
+    let count=0;
+    let intervalId;
+    document.getElementById("startBtn").addEventListener("click",()=>{
+        if(!intervalId) {
+            intervalId=setInterval(()=>{
+                count++;
+                document.getElementById("counter").innerText=count;
+            },1000)
+        }
+    })
+      document.getElementById("stopBtn").addEventListener("click", () => {
+      clearInterval(intervalId);
+      intervalId = null; // Reset so it can be restarted
+    });
+  </script>
+</body>
+</html>
