@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>post request</h1>
+    <p>here you are sending the post request to spring boot rest api </p> 
+    <p> spring rest project return the success message in string(text format)</p>
+    <p>make sure your spring rest api is running on correct port number</p>
+    <p><b>click bellow button check the send reqest</b></p>
+
+    <div>
+        <button onclick="sendRequest()">send post request</button>
+        <p id="output"></p>
+    </div>
+    <script>
+        function sendRequest(){ // function for when user click on button to execete
+            fetch("http://localhost:8082/secondApp/customer-api/register",{ // fetch request with 1st param is url and 2nd is method
+                method:"POST" // request type
+            })
+            .then(res=>res.text()) // proceess the response here it is converting to string
+            .then(data=>{
+                console.log(data) // here it is printing on console
+                document.getElementById("output").innerHTML=`<p><b>Output::${data}</b></p>` // updating the p tag using id
+                //document.getElementById("output").innerText=data;
+            })
+            .catch(error=>console.log(error)) // catch block handel the error
+        }
+    </script>
+</body>
+</html>

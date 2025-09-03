@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <h1>post request</h1>
+    <p>here you are sending the get request to spring boot rest api </p> 
+    <p> spring rest project return the success message in string(text format)</p>
+    <p>make sure your spring rest api is running on correct port number</p>
+    <p><b>click bellow button check the send reqest</b></p>
+
+    <div>
+        <button onclick="sendRequest()">get delete request</button>
+        <p id="output"></p>
+    </div>
+    <script>
+        function sendRequest(){
+            fetch("http://localhost:8082/secondApp/customer-api/all",{
+                method:"GET"
+            })
+            .then(res=>res.text())
+            .then(data=>{
+                console.log(data)
+                document.getElementById("output").innerHTML=`<p><b>output::${data}</b></p>`
+            })
+            .catch(error=>console.log(error))
+        }
+    </script>
+</body>
+</html>
