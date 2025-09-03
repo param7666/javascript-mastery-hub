@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Fetching the data from backend or api (Spring rest)</h1>
+
+    <div>
+        <button onclick="getData()">send get request</button>
+        <p id="show"></p>
+    </div>
+
+    <script>
+       function getData() {
+         fetch("http://localhost:8082/secondApp/customer-api/show")
+        .then(res=>res.text())
+        .then(data=>{
+            console.log(data)
+            document.getElementById("show").innerText=data;
+        })
+        .catch(error=>console.log(error));
+       }
+    </script>
+</body>
+</html>
