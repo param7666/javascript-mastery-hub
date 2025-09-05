@@ -1,0 +1,122 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <style>
+    /* Table Styling */
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2; /* alternate row color */
+    }
+
+    tr:hover {
+      background-color: #ddd; /* highlight row on hover */
+    }
+
+    h2 {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+    <div>
+        <button id="btn">send request</button>
+        <!-- Table will be inserted dynamically here -->
+        <div id="tableContainer"></div>
+    </div>
+
+    <script>
+        // Add click listener on button
+        document.getElementById("btn").addEventListener("click",sendRequest);
+        // Global array to hold customers
+        let cust=[]
+        // function to fetch data from backend
+        function sendRequest(){
+            fetch("http://localhost:8082/sendingJsonData/json-api/allCustomer")
+            .then(res=>res.json())
+            .then(data=>{
+                cust=data; // store into array
+                // print the object
+                console.log(cust)
+
+                // call the function to build the table 
+                buildTable(cust);
+            })
+            .catch(error=>console.log(error));
+        }
+
+        // function to build and display the table
+        function buildTable(cust) {
+            let html=`
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Customer Name</th>
+                        <th>Customer Address</th>
+                        <th>Customer Balance</th>
+                    </tr>
+                </thead>
+            <tbody>
+            `;
+
+            //loop through custoemr and add rows
+
+            cust.forEach(element => {
+                html+=`
+                <tr>
+                    <td>${element.cid}</td>
+                    <td>${element.name}</td>
+                    <td>${element.addrs}</td>
+                    <td>${element.balance.toFixed(2)}</td>
+                `;
+            });
+
+            html+=`
+            </tbody>
+            </table>
+            `;
+
+            document.getElementById("tableContainer").innerHTML=html;
+        }
+    </script>
+</body>
+</html>

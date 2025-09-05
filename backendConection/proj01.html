@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>fetch get request on springboot project01</h1>
+
+    <div>
+        <button onclick="cllBackend()">fetch data</button>
+        <p id="para"></p>
+    </div>
+
+    <div>
+        <h2>fetch wish message</h2>
+        <button onclick="wishmessage()">fetch</button>
+        <p id="show"></p>
+    </div>
+    <script>
+        function cllBackend(){
+            fetch("http://localhost:8082/restApp/name-api/print")
+            .then(response=>response.text())
+            .then(data=>{
+                console.log(data)
+                document.getElementById("para").innerText=data;
+            })
+            .catch(error=>console.error(error));
+            
+        }
+
+        function wishmessage(){
+            fetch("http://localhost:8082/restApp/wish-api/wish")
+            .then(res=>res.text())
+            .then(data=>{
+                console.log(data);
+                document.getElementById("show").innerText=data;
+            })
+            .error(error=>console.log(error))
+        }
+    </script>
+</body>
+</html>

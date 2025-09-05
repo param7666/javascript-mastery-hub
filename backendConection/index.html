@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fetch Student</title>
+</head>
+<body>
+  <h2>Student Info</h2>
+  <button onclick="fetchStudent()">Get Student</button>
+  <div id="studentData"></div>
+
+  <script>
+    function fetchStudent() {
+      let id = 101;
+      let name = "Amit";
+
+      // Call Spring Boot API (port 8082)
+      fetch(`http://localhost:8083/connection/student/view?id=${id}&name=${encodeURIComponent(name)}`)
+        .then(response => response.json())
+        .then(student => {
+          document.getElementById("studentData").innerHTML = `
+            <p>ID: ${student.id}</p>
+            <p>Name: ${student.name}</p>
+            <p>Age: ${student.age}</p>
+          `;
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+    }
+  </script>
+</body>
+</html>

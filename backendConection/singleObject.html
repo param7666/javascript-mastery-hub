@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button id="btn">send request</button>
+        <p id="para"></p>
+    </div>
+
+    <script>
+        document.getElementById("btn").addEventListener("click",sendRequest);
+        let customer=[]
+        function sendRequest(){
+            fetch("http://localhost:8082/sendingJsonData/json-api/customer")
+            .then(res=>res.json())
+            .then(data=>{
+                customer=data;
+                
+                console.log(customer)
+
+                let html=`customer details fetch from bacend is Customer id ${customer.cid}, Name ${customer.name}, address ${customer.addrs},  balance ${customer.balance}`;
+                document.getElementById("para").innerText=html;
+               
+            })
+            .catch(error=>console.log(error));
+        }
+    </script>
+</body>
+</html>
